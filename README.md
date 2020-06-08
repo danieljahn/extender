@@ -1,6 +1,6 @@
 # Extender
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+This app downloads a list of specified vscode exteions from [Open VSX Registry](https://open-vsx.org/) and makes them available as ZIP archive including an installer script.
 
 ## Development server
 
