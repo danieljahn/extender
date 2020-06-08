@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {forkJoin, Observable, of} from 'rxjs';
 import {Extension, ExtensionBlobError, ExtensionMetadataError} from './extension';
-import {catchError, filter, map, mergeMap, switchMap} from 'rxjs/operators';
+import {catchError, map, switchMap} from 'rxjs/operators';
 import {ExtensionGroup} from './extension-group';
-import {ExtensionMetadata} from "./extension-metadata";
+import {ExtensionMetadata} from './extension-metadata';
 
 @Injectable({
   providedIn: 'root'

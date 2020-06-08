@@ -1,4 +1,4 @@
-import {ExtensionMetadata} from "./extension-metadata";
+import {ExtensionMetadata} from './extension-metadata';
 
 export class Extension {
 
