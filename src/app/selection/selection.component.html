@@ -8,3 +8,7 @@
   <button mat-raised-button color="primary" (click)="onClear()">Clear</button>
   <button mat-raised-button color="primary" type="submit">Download</button>
 </form>
+
+<app-extension *ngFor="let extension of extensions"
+  [extension]="extension">
+</app-extension>

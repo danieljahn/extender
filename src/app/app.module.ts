@@ -7,14 +7,17 @@ import { SelectionComponent } from './selection/selection.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule} from '@angular/material/button';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { ExtensionComponent } from './extension/extension.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SelectionComponent
+    SelectionComponent,
+    ExtensionComponent
   ],
   imports: [
     BrowserModule,
@@ -23,6 +26,7 @@ import {HttpClientModule} from '@angular/common/http';
     MatInputModule,
     MatButtonModule,
     MatProgressBarModule,
+    MatCardModule,
     ReactiveFormsModule,
     HttpClientModule
   ],

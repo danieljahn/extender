@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
 import {ExtensionService} from '../extension.service';
-import {Extension} from '../extension';
-import { saveAs } from 'file-saver';
 import {ExtensionGroup} from '../extension-group';
 
 @Component({
@@ -15,10 +13,27 @@ export class SelectionComponent implements OnInit {
   extensionsForm = this.formBuilder.group({
     extensions: ['']
   });
-
   downloadRunning: boolean;
+  extensionGroup: ExtensionGroup;
 
   constructor(private formBuilder: FormBuilder, private extensionService: ExtensionService) { }
+
+  get extensions() {
+    if (this.extensionGroup) {
+      return this.extensionGroup.extensions
+        .sort((a, b) => {
+          if (!a.hasErrors() && b.hasErrors()) {
+            return -1;
+          }
+          else if (a.hasErrors() && !b.hasErrors()) {
+            return 1;
+          }
+          else {
+            return 0;
+          }
+      });
+    }
+  }
 
   ngOnInit(): void {
     this.downloadRunning = false;
@@ -26,15 +41,16 @@ export class SelectionComponent implements OnInit {
 
   onClear(): void {
     this.extensionsForm.reset();
+    this.extensionGroup = null;
   }
 
   onSubmit(): void {
     this.downloadRunning = true;
-    const extensionGroup = ExtensionGroup.from(this.extensionsForm.get('extensions').value);
-    this.extensionService.downloadExtensionGroup(extensionGroup).subscribe({
+    this.extensionGroup = ExtensionGroup.from(this.extensionsForm.get('extensions').value);
+    this.extensionService.downloadExtensionGroup(this.extensionGroup).subscribe({
       next: value => console.log(value),
       complete: () => {
-        extensionGroup.createZipArchive().subscribe(archive => this.createDownload(archive));
+        this.extensionGroup.createZipArchive().subscribe(archive => this.createDownload(archive));
       }
     });
   }

@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import {forkJoin, Observable} from 'rxjs';
-import {Extension, ExtensionMetadata} from './extension';
-import {map, mergeMap, switchMap} from 'rxjs/operators';
+import {forkJoin, Observable, of} from 'rxjs';
+import {Extension, ExtensionBlobError, ExtensionMetadataError} from './extension';
+import {catchError, filter, map, mergeMap, switchMap} from 'rxjs/operators';
 import {ExtensionGroup} from './extension-group';
+import {ExtensionMetadata} from "./extension-metadata";
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +22,17 @@ export class ExtensionService {
       .pipe(
         map(metadata => extension.withMetadata(metadata)),
         switchMap(extensionWithMetadata => {
-          return this.httpClient.get(extensionWithMetadata.getDownloadUrl(), {responseType: 'blob'})
-            .pipe(
-              map(extensionBlob => {
-                return extensionWithMetadata.withBlob(extensionBlob);
-              })
-            );
-        }));
+            return this.httpClient.get(extensionWithMetadata.getDownloadUrl(), {responseType: 'blob'})
+              .pipe(
+                map(extensionBlob => {
+                  return extensionWithMetadata.withBlob(extensionBlob);
+                },
+                catchError(() => of(extension.withError(new ExtensionBlobError()))))
+              );
+          }
+        ),
+        catchError(() => of(extension.withError(new ExtensionMetadataError())))
+      );
   }
 
   private getMetadata(extensionId: Extension): Observable<any> {

@@ -11,6 +11,14 @@ export class ExtensionGroup {
     this.extensions = extensions;
   }
 
+  get extensionsWithoutErrors() {
+    return this.extensions.filter(e => !e.hasErrors());
+  }
+
+  get extensionsWithErrors() {
+    return this.extensions.filter(e => e.hasErrors());
+  }
+
   public static from(entensionIds: string): ExtensionGroup {
     const extensions = entensionIds
       .split('\n')
@@ -20,14 +28,14 @@ export class ExtensionGroup {
   }
 
   public createShellScript(): string {
-    return this.extensions
+    return this.extensionsWithoutErrors
       .map(e => `code --install-extension ${e.getFileName()}`)
       .join('\n');
   }
 
   public createZipArchive(): Observable<Blob>{
     const zip = new JSZip();
-    this.extensions.forEach(e => {
+    this.extensionsWithoutErrors.forEach(e => {
       zip.file(e.getFileName(), e.getBlob(), {binary: true});
     });
     zip.file('install.sh', this.createShellScript(), {unixPermissions: '755'});

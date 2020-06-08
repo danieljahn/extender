@@ -1,4 +1,4 @@
-import {Observable} from 'rxjs';
+import {ExtensionMetadata} from "./extension-metadata";
 
 export class Extension {
 
@@ -13,6 +13,7 @@ export class Extension {
   name: string;
   private metadata: ExtensionMetadata;
   private blob: Blob;
+  private errors: ExtensionError[] = [];
 
   public static from(extensionId: string){
     if (Extension.isIdValid(extensionId)) {
@@ -33,31 +34,59 @@ export class Extension {
     return this.id.split('.')[1];
   }
 
-  withMetadata(metadata: ExtensionMetadata) {
+  public withMetadata(metadata: ExtensionMetadata) {
     this.metadata = metadata;
     return this;
   }
 
-  withBlob(blob: Blob) {
+  public withBlob(blob: Blob) {
     this.blob = blob;
     return this;
+  }
+
+  public withError(error: ExtensionError): Extension {
+    this.errors.push(error);
+    return this;
+  }
+
+  public hasErrors() {
+    return this.errors.length > 0;
   }
 
   public getDownloadUrl(): string {
     return this.metadata.files.download;
   }
 
-  getBlob() {
+  public getBlob() {
     return this.blob;
   }
 
-  getFileName() {
+  public getFileName() {
     return this.metadata.files.download.substring(this.metadata.files.download.lastIndexOf('/') + 1);
+  }
+
+  getId() {
+    return this.id;
+  }
+
+  getMetadata(): ExtensionMetadata {
+    return this.metadata;
+  }
+
+  getErrors() {
+    return this.errors;
   }
 }
 
-export interface ExtensionMetadata {
-  files: {
-    download: string
-  };
+export abstract class ExtensionError {
+  message: string;
 }
+
+export class ExtensionMetadataError extends ExtensionError{
+  message = 'Could not download metadata';
+}
+
+export class ExtensionBlobError extends ExtensionError{
+  message = 'Could not download extension';
+}
+
