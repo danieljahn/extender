@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from "@angular/common/http";
-import {forkJoin, Observable} from "rxjs";
-import {Extension, ExtensionMetadata} from "./extension";
-import {map, mergeMap, switchMap} from "rxjs/operators";
-import {ExtensionGroup} from "./extension-group";
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {forkJoin, Observable} from 'rxjs';
+import {Extension, ExtensionMetadata} from './extension';
+import {map, mergeMap, switchMap} from 'rxjs/operators';
+import {ExtensionGroup} from './extension-group';
 
 @Injectable({
   providedIn: 'root'
@@ -16,23 +16,23 @@ export class ExtensionService {
   }
 
   public getExtension(extension: Extension): Observable<Extension> {
-    const metadataUrl = `${this.baseUrl}/${extension.namespace}/${extension.name}/latest`
+    const metadataUrl = `${this.baseUrl}/${extension.namespace}/${extension.name}/latest`;
     return this.httpClient.get<ExtensionMetadata>(metadataUrl)
       .pipe(
         map(metadata => extension.withMetadata(metadata)),
-        switchMap(extension => {
-          return this.httpClient.get(extension.getDownloadUrl(), {responseType: 'blob'})
+        switchMap(extensionWithMetadata => {
+          return this.httpClient.get(extensionWithMetadata.getDownloadUrl(), {responseType: 'blob'})
             .pipe(
               map(extensionBlob => {
-                return extension.withBlob(extensionBlob)
+                return extensionWithMetadata.withBlob(extensionBlob);
               })
-            )
-        }))
+            );
+        }));
   }
 
   private getMetadata(extensionId: Extension): Observable<any> {
-    const metadataUrl = `${this.baseUrl}/${extensionId.namespace}/${extensionId.name}`
-    return this.httpClient.get<ExtensionMetadata>(metadataUrl)
+    const metadataUrl = `${this.baseUrl}/${extensionId.namespace}/${extensionId.name}`;
+    return this.httpClient.get<ExtensionMetadata>(metadataUrl);
   }
 
   public downloadExtensionGroup(extensionGroup: ExtensionGroup): Observable<Extension[]> {

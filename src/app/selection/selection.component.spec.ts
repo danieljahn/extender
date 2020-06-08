@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectionComponent } from './selection.component';
 import { FormBuilder } from '@angular/forms';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('SelectionComponent', () => {
   let component: SelectionComponent;

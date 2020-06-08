@@ -20,13 +20,13 @@ describe('Extension', () => {
     expect(extension).toBeFalsy();
   });
 
-  it('should should extract namespace from id', function () {
+  it('should should extract namespace from id', () => {
     const extension: Extension = Extension.from('namespace.extension');
 
     expect(extension.namespace).toEqual('namespace');
   });
 
-  it('should should extract name from id', function () {
+  it('should should extract name from id', () => {
     const extension: Extension = Extension.from('namespace.extension');
 
     expect(extension.name).toEqual('extension');

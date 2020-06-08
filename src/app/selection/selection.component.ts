@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import {ExtensionService} from "../extension.service";
-import {Extension} from "../extension";
+import {ExtensionService} from '../extension.service';
+import {Extension} from '../extension';
 import { saveAs } from 'file-saver';
-import {ExtensionGroup} from "../extension-group";
+import {ExtensionGroup} from '../extension-group';
 
 @Component({
   selector: 'app-selection',
@@ -36,11 +36,11 @@ export class SelectionComponent implements OnInit {
       complete: () => {
         extensionGroup.createZipArchive().subscribe(archive => this.createDownload(archive));
       }
-    })
+    });
   }
 
   private createDownload(file: Blob) {
-      var link = document.createElement('a');
+      const link = document.createElement('a');
       link.href = window.URL.createObjectURL(file);
       link.download = 'extensions.zip';
       this.downloadRunning = false;

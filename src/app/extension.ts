@@ -1,12 +1,6 @@
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 
 export class Extension {
-
-  id: string;
-  namespace: string;
-  name: string;
-  private metadata: ExtensionMetadata;
-  private blob: Blob;
 
   private constructor(id: string){
     this.id = id;
@@ -14,13 +8,11 @@ export class Extension {
     this.name = this.extractNameFromId();
   }
 
-  private extractNamespaceFromId() {
-    return this.id.split('.')[0];
-  }
-
-  private extractNameFromId() {
-    return this.id.split('.')[1];
-  }
+  id: string;
+  namespace: string;
+  name: string;
+  private metadata: ExtensionMetadata;
+  private blob: Blob;
 
   public static from(extensionId: string){
     if (Extension.isIdValid(extensionId)) {
@@ -31,6 +23,14 @@ export class Extension {
   private static isIdValid(extensionId: string): boolean{
     const matches = extensionId.match(/^[\w-]+\.[\w-]+$/);
     return matches && matches.length === 1;
+  }
+
+  private extractNamespaceFromId() {
+    return this.id.split('.')[0];
+  }
+
+  private extractNameFromId() {
+    return this.id.split('.')[1];
   }
 
   withMetadata(metadata: ExtensionMetadata) {
@@ -52,12 +52,12 @@ export class Extension {
   }
 
   getFileName() {
-    return this.metadata.files.download.substring(this.metadata.files.download.lastIndexOf('/')+1);
+    return this.metadata.files.download.substring(this.metadata.files.download.lastIndexOf('/') + 1);
   }
 }
 
 export interface ExtensionMetadata {
   files: {
     download: string
-  }
+  };
 }

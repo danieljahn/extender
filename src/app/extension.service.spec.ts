@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ExtensionService } from './extension.service';
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {metadataRepsonse, extensionResponse} from './open-vsx-api-mock'
-import {Extension} from "./extension";
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {metadataRepsonse, extensionResponse} from './open-vsx-mock/open-vsx-api-mock';
+import {Extension} from './extension';
 
 describe('ExtensionService', () => {
   let service: ExtensionService;
@@ -31,7 +31,7 @@ describe('ExtensionService', () => {
           expect(extension.getBlob()).toEqual(extensionResponse);
         }
       }
-    )
+    );
 
     const metadataRequest = mockApi.expectOne('https://open-vsx.org/api/formulahendry/code-runner/latest');
     expect(metadataRequest.request.method).toEqual('GET');
@@ -41,5 +41,5 @@ describe('ExtensionService', () => {
     expect(extensionRequest.request.method).toEqual('GET');
     extensionRequest.flush(extensionResponse);
 
-  })
+  });
 });

@@ -33,11 +33,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: npm install
+      - name: Install node modules
         run: npm i
 
-      - name: ng lint
-        run: ng lint
+      - name: Lint
+        run: npm run lint
 
-      - name: ng test
-        run: ng test
+      - name: Test
+        run: npm run test
+

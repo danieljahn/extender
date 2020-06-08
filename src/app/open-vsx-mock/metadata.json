@@ -1,4 +1,4 @@
-export const metadataRepsonse = {
+{
   "namespaceUrl": "https://open-vsx.org/api/formulahendry",
   "reviewsUrl": "https://open-vsx.org/api/formulahendry/code-runner/reviews",
   "files": {
@@ -56,5 +56,3 @@ export const metadataRepsonse = {
   "dependencies": [],
   "bundledExtensions": []
 }
-
-export const extensionResponse = new Blob(['My extension']);
