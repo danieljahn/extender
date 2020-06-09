@@ -9,7 +9,7 @@
     "test-ci": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng deploy --base-href /extender/"
+    "deploy": "ng deploy"
   },
   "private": true,
   "dependencies": {

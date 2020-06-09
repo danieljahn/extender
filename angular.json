@@ -126,7 +126,11 @@
         },
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
-          "options": {}
+          "options": {
+            "baseHref": "/extender/",
+            "name": "Daniel Jahn",
+            "email": "370305+danieljahn@users.noreply.github.com"
+          }
         }
       }
     }
