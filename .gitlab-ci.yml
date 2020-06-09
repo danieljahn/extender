@@ -1,0 +1,35 @@
+default:
+    image: buildkite/puppeteer
+
+cache:
+  paths:
+    - node_modules
+
+stages:
+    - test
+    - deploy
+
+before_script:
+        - npm install -g @angular/cli
+        - npm install
+
+lint:
+    stage: test
+    script:
+        - npm run lint
+
+test:
+    stage: test
+    script:
+        - npm run test-ci
+
+pages:
+    stage: deploy
+    script:
+        - npm run build-ci
+    artifacts:
+      paths:
+        - public
+    only:
+      - master
+
