@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {ExtensionService} from '../extension.service';
 import {ExtensionGroup} from '../extension-group';
 
@@ -11,7 +11,7 @@ import {ExtensionGroup} from '../extension-group';
 export class SelectionComponent implements OnInit {
 
   extensionsForm = this.formBuilder.group({
-    extensions: ['']
+    extensions: ['', Validators.required ]
   });
   downloadRunning: boolean;
   extensionGroup: ExtensionGroup;
@@ -45,10 +45,15 @@ export class SelectionComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (!this.extensionsForm.get('extensions').errors){
+      this.startDownload();
+    }
+  }
+
+  private startDownload() {
     this.downloadRunning = true;
     this.extensionGroup = ExtensionGroup.from(this.extensionsForm.get('extensions').value);
     this.extensionService.downloadExtensionGroup(this.extensionGroup).subscribe({
-      next: value => console.log(value),
       complete: () => {
         this.extensionGroup.createZipArchive().subscribe(archive => this.createDownload(archive));
       }
