@@ -17,27 +17,27 @@ export class ExtensionComponent implements OnInit {
   }
 
   get id() {
-    return this.extension.getId();
+    return this.extension?.getId();
   }
 
   get status(){
-    return this.extension.hasErrors() ? 'Error' : 'OK';
+    return this.extension?.hasErrors() ? 'Error' : 'OK';
   }
 
   get hasMetadata() {
-    return !this.extension.hasErrors() && this.extension.getMetadata() !== undefined;
+    return !this.extension?.hasErrors() && this.extension?.getMetadata() !== undefined;
   }
 
   get metadata() {
-    return this.extension.getMetadata();
+    return this.extension?.getMetadata();
   }
 
   get hasErrors() {
-    return this.extension.hasErrors();
+    return this.extension?.hasErrors();
   }
 
   get errors() {
-    return this.extension.getErrors().map(e => e.message).join('\n');
+    return this.extension?.getErrors().map(e => e.message).join('\n');
   }
 
   get icon(){
