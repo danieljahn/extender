@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build-ci": "ng build --prod --output-path public",
+    "build-ci": "ng build --prod --base-href=/extender/ --output-path public",
     "test": "ng test",
     "test-ci": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "lint": "ng lint",
